@@ -1,11 +1,17 @@
+const base = "/Contactflow/front" 
+console.log(base + "edit")
+
 const routes = [
-    { path: "/",       file: "../page/home.js" },
-    { path: "/create", file: "../page/create.js" },
-    { path: "/edit",   file: "../page/edit.js" },
+    { path: base + "/",       file: "../page/home.js" },
+    { path: base + "/create", file: "../page/create.js" },
+    { path: base + "/edit",   file: "../page/Edit.js" },
+    { path: base + "/detail",   file: "../page/detail.js" },
+
 ];
 
 const router = async () => {
     const currentPath = location.pathname;
+    console.log(location.pathname)
     // resultat final
     let match = null;
 
@@ -17,6 +23,7 @@ const router = async () => {
             match = route;
             break;       
         }
+        console.log(currentPath , route.path)
     }
 
     //mettre ajour le conteneur
@@ -25,7 +32,7 @@ const router = async () => {
     if (match !== null) {
         try {
             const module = await import(match.file);
-
+            console.log(match.file)
             const render = module.default;
             //le html se charge a l'endroit voulu
             appContainer.innerHTML = render();
@@ -34,7 +41,7 @@ const router = async () => {
             appContainer.innerHTML = "<h1>Erreur de chargement</h1>";
         }
     } else {
-        appContainer.innerHTML = "<h1>404</h1><p>Page introuvable.</p>";
+        appContainer.innerHTML = "<h1>404</h1><p>Page introuvable</p>";
     }
 };
 
@@ -49,3 +56,4 @@ document.addEventListener("click", (e) => {
 window.addEventListener("popstate", router);
 
 router();
+
