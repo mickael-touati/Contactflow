@@ -1,3 +1,7 @@
-export default function detail() {
-    return `<h1>Accueil</h1><p>Bienvenue sur ContactFlow !</p>`;
+export default function() {
+    return `
+        <h1>Détail du contact</h1>
+        <a href="/Contactflow/front/">Retour</a>
+        <div id="detail-contact">chargement...</div>
+    `
 }
