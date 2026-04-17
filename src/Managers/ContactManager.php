@@ -76,20 +76,3 @@ class ContactManager extends Database {
     }
 
 }
-
-public function getContactsPaginated($userId, $limit, $offset)
-{
-    $sql = "SELECT * FROM contacts 
-            WHERE user_id = :user_id
-            LIMIT :limit OFFSET :offset";
-
-    $stmt = $this->pdo->prepare($sql);
-
-    $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
-    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-
-    $stmt->execute();
-
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
