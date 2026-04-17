@@ -53,4 +53,3 @@ class ContactManager extends Database {
         return $stmt->execute();
         }
 }
-?>
