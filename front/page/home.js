@@ -3,6 +3,10 @@ export default function() {
         <h1>Liste des contacts</h1>
 
         <a href="/Contactflow/front/create">Ajouter un contact</a>
+<<<<<<< HEAD
+=======
+        
+>>>>>>> origin/mickael
 
         <input type="text" id="search" placeholder="Rechercher...">
         <div id="suggestions"></div>
@@ -10,7 +14,6 @@ export default function() {
         <div id="liste-contacts">chargement...</div>
     `
 }
-
 
 export function afterRender() {
 
@@ -50,4 +53,8 @@ export function afterRender() {
 
 setTimeout(()=>{
 afterRender()
+<<<<<<< HEAD
 },500)
+=======
+},500)
+>>>>>>> origin/mickael
