@@ -10,4 +10,4 @@ export default function() {
             <button type="button" id="btnCreer">Créer</button>
         </form>
     `
-}
+}   
