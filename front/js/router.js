@@ -56,3 +56,7 @@ document.addEventListener("click", (e) => {
 window.addEventListener("popstate", router);
 
 router();
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/mickael

@@ -1,6 +1,7 @@
 export default function() {
     return `
         <h1>Liste des contacts</h1>
+<<<<<<< HEAD
 
         <a href="/create">Ajouter un contact</a>
 
@@ -61,3 +62,9 @@ console.log('icic')
 setTimeout(()=>{
 afterRender()
 },500)
+=======
+        <a href="/Contactflow/front/create">Ajouter un contact</a>
+        <div id="liste-contacts">chargement...</div>
+    `
+}
+>>>>>>> origin/mickael
