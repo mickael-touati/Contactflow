@@ -2,7 +2,7 @@ export default function() {
     return `
         <h1>Liste des contacts</h1>
 
-        <a href="/create">Ajouter un contact</a>
+        <a href="/Contactflow/front/create">Ajouter un contact</a>
 
         <input type="text" id="search" placeholder="Rechercher...">
         <div id="suggestions"></div>
