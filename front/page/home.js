@@ -1,7 +1,6 @@
 export default function() {
     return `
         <h1>Liste des contacts</h1>
-<<<<<<< HEAD
 
         <a href="/create">Ajouter un contact</a>
 
@@ -14,7 +13,7 @@ export default function() {
 
 
 export function afterRender() {
-console.log('icic')
+
     let search = document.getElementById("search");
     let suggestions = document.getElementById("suggestions");
 
@@ -26,20 +25,10 @@ console.log('icic')
             suggestions.innerHTML = "";
             return;
         }
-        console.log('la')
-        let response = await fetch("http://localhost/Contactflow/api/public/index.php?action=search&name=" + value);
-        // let data = await response.json();
 
-        const data = [
-            {
-                nom: "Gabriel",
-                prenom:"Gabriel"
-            },
-            {
-                nom: "Wassa",
-                prenom:"Mohamed"
-            }
-        ]
+        let response = await fetch("http://localhost/Contactflow/api/public/index.php?action=search&name=" + value);
+        let data = await response.json();
+
         suggestions.innerHTML = "";
 
         for (let i = 0; i < data.length; i++) {
@@ -62,9 +51,3 @@ console.log('icic')
 setTimeout(()=>{
 afterRender()
 },500)
-=======
-        <a href="/Contactflow/front/create">Ajouter un contact</a>
-        <div id="liste-contacts">chargement...</div>
-    `
-}
->>>>>>> origin/mickael
