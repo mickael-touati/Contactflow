@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Managers;
+
 use App\Core\Database;
 use PDO;
 
@@ -51,5 +53,26 @@ class ContactManager extends Database {
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute(['id' => $id]);
     }
+
+    public function searchContacts($userId, $keyword)
+    {
+        $sql = "SELECT * FROM contacts 
+                WHERE user_id = :user_id 
+                AND (
+                    nom LIKE :keyword 
+                    OR prenom LIKE :keyword 
+                    OR email LIKE :keyword
+                )
+                LIMIT 10";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute([
+            'user_id' => $userId,
+            'keyword' => "%" . $keyword . "%"
+        ]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
-?>
