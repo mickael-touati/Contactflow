@@ -3,7 +3,7 @@ console.log(base + "edit")
 
 const routes = [
     { path: base + "/",       file: "../page/home.js" },
-    { path: base + "/create", file: "../page/create.js" },
+    { path: base + "/create", file: "../page/Create.js" },
     { path: base + "/edit",   file: "../page/Edit.js" },
     { path: base + "/detail",   file: "../page/detail.js" },
 
@@ -56,4 +56,3 @@ document.addEventListener("click", (e) => {
 window.addEventListener("popstate", router);
 
 router();
-
