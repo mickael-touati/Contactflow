@@ -9,7 +9,7 @@ const routes = [
 
 ];
 
-const router = async () => {
+export const router = async () => {
     const currentPath = location.pathname;
     console.log(location.pathname)
     // resultat final
@@ -34,8 +34,12 @@ const router = async () => {
             const module = await import(match.file);
             console.log(match.file)
             const render = module.default;
-            //le html se charge a l'endroit voulu
             appContainer.innerHTML = render();
+
+            // Appelle afterRender si elle existe dans la page
+            if (module.afterRender) {
+            module.afterRender();
+            }
         } catch (error) {
             console.error("Erreur de chargement du module", error);
             appContainer.innerHTML = "<h1>Erreur de chargement</h1>";
@@ -55,8 +59,4 @@ document.addEventListener("click", (e) => {
 
 window.addEventListener("popstate", router);
 
-<<<<<<< HEAD
 router();
-=======
-router();
->>>>>>> origin/mickael

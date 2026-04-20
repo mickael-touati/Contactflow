@@ -1,60 +1,60 @@
-export default function() {
+import { getContacts } from "../js/api.js"
+
+export default function () {
     return `
         <h1>Liste des contacts</h1>
 
         <a href="/Contactflow/front/create">Ajouter un contact</a>
-<<<<<<< HEAD
-=======
-        
->>>>>>> origin/mickael
 
         <input type="text" id="search" placeholder="Rechercher...">
         <div id="suggestions"></div>
 
-        <div id="liste-contacts">chargement...</div>
+        <div id="liste-contacts"></div>
     `
 }
 
-export function afterRender() {
+export async function afterRender() {
 
-    let search = document.getElementById("search");
-    let suggestions = document.getElementById("suggestions");
+    const search = document.getElementById("search")
+    const suggestions = document.getElementById("suggestions")
 
-    search.addEventListener("input", async function () {
+    search.addEventListener("input", async () => {
 
-        let value = search.value;
+        const value = search.value
 
         if (value === "") {
-            suggestions.innerHTML = "";
-            return;
+            suggestions.innerHTML = ""
+            return
         }
 
-        let response = await fetch("http://localhost/Contactflow/api/public/index.php?action=search&name=" + value);
-        let data = await response.json();
+        const response = await fetch(
+            `http://localhost/Contactflow/api/index.php?action=search&name=${value}`
+        )
 
-        suggestions.innerHTML = "";
+        const data = await response.json()
 
-        for (let i = 0; i < data.length; i++) {
+        suggestions.innerHTML = ""
 
-            let contact = data[i];
+        data.forEach(contact => {
+            const div = document.createElement("div")
+            div.textContent = contact.nom + " " + contact.prenom
 
-            let div = document.createElement("div");
-            div.textContent = contact.nom + " " + contact.prenom;
+            div.onclick = () => {
+                search.value = div.textContent
+                suggestions.innerHTML = ""
+            }
 
-            div.onclick = function () {
-                search.value = contact.nom + " " + contact.prenom;
-                suggestions.innerHTML = "";
-            };
+            suggestions.appendChild(div)
+        })
+    })
 
-            suggestions.appendChild(div);
-        }
-    });
+    const contacts = await getContacts()
+    const list = document.getElementById("liste-contacts")
+
+    list.innerHTML = contacts.map(c => `
+        <p>
+            ${c.nom} ${c.prenom}
+            <a href="/Contactflow/front/detail?id=${c.id}">voir</a>
+        </p>
+    `).join("")
 }
-
-setTimeout(()=>{
-afterRender()
-<<<<<<< HEAD
-},500)
-=======
-},500)
->>>>>>> origin/mickael
