@@ -41,7 +41,7 @@ export async function afterRender() {
         }
     })
 
-    // Barre de recherche — ton code existant
+    // Barre de recherche
     let search = document.getElementById("search");
     let suggestions = document.getElementById("suggestions");
 

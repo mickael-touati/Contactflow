@@ -16,7 +16,7 @@ export default function() {
 }
 
 export async function afterRender() {
-    // Récupérer l'id dans l'URL
+    //recuperer l'id dans l'URL
     const params = new URLSearchParams(location.search)
     const id = params.get("id")
 
