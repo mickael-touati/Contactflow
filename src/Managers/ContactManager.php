@@ -75,7 +75,7 @@ class ContactManager extends Database {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-}
+
 
 public function getContactsPaginated($userId, $limit, $offset)
 {
@@ -92,4 +92,6 @@ public function getContactsPaginated($userId, $limit, $offset)
     $stmt->execute();
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }
