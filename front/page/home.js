@@ -1,60 +1,93 @@
-export default function() {
+import { getContacts } from "../js/api.js"
+
+let page = 0
+const limit = 10
+
+export default function () {
     return `
         <h1>Liste des contacts</h1>
 
         <a href="/Contactflow/front/create">Ajouter un contact</a>
-<<<<<<< HEAD
-=======
-        
->>>>>>> origin/mickael
 
         <input type="text" id="search" placeholder="Rechercher...">
         <div id="suggestions"></div>
 
-        <div id="liste-contacts">chargement...</div>
+        <div id="liste-contacts"></div>
+
+        <div id="pagination">
+            <button id="btnPrev">Précédent</button>
+            <span id="numPage">Page 1</span>
+            <button id="btnNext">Suivant</button>
+        </div>
     `
 }
 
-export function afterRender() {
+export async function afterRender() {
 
-    let search = document.getElementById("search");
-    let suggestions = document.getElementById("suggestions");
+    const search = document.getElementById("search")
+    const suggestions = document.getElementById("suggestions")
 
-    search.addEventListener("input", async function () {
+    search.addEventListener("input", async () => {
 
-        let value = search.value;
+        const value = search.value
 
         if (value === "") {
-            suggestions.innerHTML = "";
-            return;
+            suggestions.innerHTML = ""
+            return
         }
 
-        let response = await fetch("http://localhost/Contactflow/api/public/index.php?action=search&name=" + value);
-        let data = await response.json();
+        const response = await fetch(
+            `http://localhost/Contactflow/api/index.php?action=search&name=${value}`
+        )
 
-        suggestions.innerHTML = "";
+        const data = await response.json()
 
-        for (let i = 0; i < data.length; i++) {
+        suggestions.innerHTML = ""
 
-            let contact = data[i];
+        data.forEach(contact => {
+            const div = document.createElement("div")
+            div.textContent = contact.nom + " " + contact.prenom
 
-            let div = document.createElement("div");
-            div.textContent = contact.nom + " " + contact.prenom;
+            div.onclick = () => {
+                search.value = div.textContent
+                suggestions.innerHTML = ""
+            }
 
-            div.onclick = function () {
-                search.value = contact.nom + " " + contact.prenom;
-                suggestions.innerHTML = "";
-            };
+            suggestions.appendChild(div)
+        })
+    })
 
-            suggestions.appendChild(div);
+    // Pagination
+    document.getElementById("btnNext").addEventListener("click", async () => {
+        page++
+        document.getElementById("numPage").textContent = "Page " + (page + 1)
+        await chargerContacts()
+    })
+
+    document.getElementById("btnPrev").addEventListener("click", async () => {
+        if (page > 0) {
+            page--
+            document.getElementById("numPage").textContent = "Page " + (page + 1)
+            await chargerContacts()
         }
-    });
+    })
+
+    await chargerContacts()
 }
 
-setTimeout(()=>{
-afterRender()
-<<<<<<< HEAD
-},500)
-=======
-},500)
->>>>>>> origin/mickael
+async function chargerContacts() {
+    const contacts = await getContacts(limit, page * limit)
+    const list = document.getElementById("liste-contacts")
+
+    if (contacts.length === 0) {
+        list.innerHTML = "<p>Aucun contact trouvé</p>"
+        return
+    }
+
+    list.innerHTML = contacts.map(c => `
+        <p>
+            ${c.nom} ${c.prenom}
+            <a href="/Contactflow/front/detail?id=${c.id}">voir</a>
+        </p>
+    `).join("")
+}
